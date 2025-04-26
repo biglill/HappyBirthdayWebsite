@@ -1,0 +1,60 @@
+/* full-screen black background */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  overflow: hidden;
+  position: relative;
+}
+
+/* our “sprite” is now a white circle */
+#sprite {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fadeIn 2s ease-in forwards;
+  z-index: 3; /* in front of wall */
+}
+
+/* the wall the sprite walks along */
+#wall {
+  position: absolute;
+  width: 100%;      /* full width */
+  height: 250px;
+  background: grey;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* spotlight overlay */
+#spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;      /* don’t block keys */
+  mix-blend-mode: multiply;  /* darken underlying */
+  z-index: 2;                /* between wall (0) and sprite (3) */
+
+  /* initial “cone” from ceiling at center */
+  background: radial-gradient(
+    ellipse 200px 100000px at center top,
+    transparent 0%,
+    rgba(0, 0, 0, 0.95) 60%
+  );
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
