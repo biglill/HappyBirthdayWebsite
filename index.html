@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Circle Fade & Move</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>8-Bit Spotlight Gallery</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+<!-- INTRO SCREEN -->
+<div id="intro"></div>
+
+<!-- BACK WALL -->
 <div id="wall"></div>
+<!-- FLOOR -->
+<div id="floor"></div>
+
+<!-- 8-BIT FRAMES (place your PNGs via data-img="path/to/your.png") -->
+<div class="frame" style="--x:10%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:22%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:34%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:46%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:58%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:70%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:82%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+<div class="frame" style="--x:94%;  --y:15vh;" data-img="">
+  <img class="frame-img" src="" alt="frame content" />
+</div>
+
+<!-- DARK OVERLAY WITH “CONE” -->
 <div id="spotlight"></div>
+<!-- YOUR SPRITE -->
 <div id="sprite"></div>
+
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,60 +1,105 @@
-/* full-screen black background */
+/* ====== tweak your darkness and cone shape here ====== */
+:root {
+  --spotlight-color: rgba(0, 0, 0, 0.6); /* outside-cone darkness */
+  --spotlight-width: 200px;              /* cone half-width */
+  --spotlight-height: 800px;             /* cone half-height */
+
+  --frame-size: 120px;      /* overall frame dimensions */
+  --frame-padding: 12px;    /* inner padding for your PNG */
+}
+/* ===================================================== */
+
+/* reset + full-screen black background */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0; padding: 0; box-sizing: border-box;
 }
 html, body {
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  overflow: hidden;
-  position: relative;
+  width: 100vw; height: 100vh;
+  background: black; overflow: hidden; position: relative;
 }
 
-/* our “sprite” is now a white circle */
-#sprite {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0;
-  animation: fadeIn 2s ease-in forwards;
-  z-index: 3; /* in front of wall */
+/* ====== INTRO TYPING ====== */
+#intro {
+  position: absolute; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: black; color: white;
+  display: flex; justify-content: center; align-items: center;
+  font: 4rem monospace; white-space: nowrap; overflow: hidden;
+  opacity: 1; transition: opacity 0.5s ease-in;
+  z-index: 5;
 }
 
-/* the wall the sprite walks along */
+/* ====== WALL ====== */
 #wall {
-  position: absolute;
-  width: 100%;      /* full width */
-  height: 250px;
-  background: grey;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-/* spotlight overlay */
-#spotlight {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: absolute; top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
-  pointer-events: none;      /* don’t block keys */
-  mix-blend-mode: multiply;  /* darken underlying */
-  z-index: 2;                /* between wall (0) and sprite (3) */
+  height: calc(30vh + 125px);
+  background: linear-gradient(to bottom, #777 0%, #333 100%);
+  z-index: 0; opacity: 0; transition: opacity 2s ease-in;
+}
+#wall.visible { opacity: 1; }
 
-  /* initial “cone” from ceiling at center */
+/* ====== FLOOR ====== */
+#floor {
+  position: absolute;
+  top: calc(30vh + 125px); left: 0;
+  width: 100vw;
+  height: calc(100vh - (30vh + 125px));
+  background: linear-gradient(to top, #222 0%, #111 100%);
+  z-index: 1; opacity: 0; transition: opacity 2s ease-in;
+}
+#floor.visible { opacity: 1; }
+
+/* ====== FRAME CONTAINERS ====== */
+.frame {
+  position: absolute;
+  top: var(--y, 20vh);
+  left: var(--x, 10%);
+  width: var(--frame-size);
+  height: var(--frame-size);
+  /* use your SVG as the border/artwork */
+  background: url('../pictureframe.svg') no-repeat center center;
+  background-size: contain;
+  overflow: hidden;
+  image-rendering: pixelated; /* crisp 8-bit feel */
+  z-index: 1; /* under spotlight */
+  opacity: 0; transition: opacity 2s ease-in;
+}
+.frame.visible {
+  opacity: 1;
+}
+
+/* the actual PNG goes here */
+.frame-img {
+  position: absolute;
+  top: var(--frame-padding);
+  left: var(--frame-padding);
+  width: calc(100% - var(--frame-padding)*2);
+  height: calc(100% - var(--frame-padding)*2);
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* ====== SPOTLIGHT ====== */
+#spotlight {
+  position: absolute; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none; mix-blend-mode: multiply;
+  z-index: 2;
   background: radial-gradient(
-    ellipse 200px 100000px at center top,
-    transparent 0%,
-    rgba(0, 0, 0, 0.95) 60%
+    ellipse var(--spotlight-width) var(--spotlight-height)
+    at center top,
+    transparent 20%,
+    var(--spotlight-color) 60%
   );
+  opacity: 0; transition: opacity 1s ease-in;
 }
+#spotlight.visible { opacity: 1; }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
+/* ====== SPRITE ====== */
+#sprite {
+  position: absolute; width: 100px; height: 100px;
+  background: white; border-radius: 50%;
+  z-index: 3; opacity: 0; transition: opacity 2s ease-in;
 }
+#sprite.visible { opacity: 1; }
